@@ -9,7 +9,7 @@ public class MainProject {
 
         // Prompts user to enter secret word.
         // Exits if entered wrong 3 times. Enters if correct.
-        secretWordMethod();
+//        secretWordMethod();
 
 
         // Start of program
