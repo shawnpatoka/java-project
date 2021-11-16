@@ -6,40 +6,12 @@ public class QuizCreationMode {
     static ArrayList<Question> questionArrayList = new ArrayList<Question>();
 
     public static void quizCreationMode() {
-        Scanner keyboard = new Scanner(System.in);
-        String modeSelection;
 
-        System.out.println("\nThis is The Manage Questions Menu");
-        System.out.println("Please make a choice from the selections below. Enter 1-4.");
-        System.out.println("1. Add a new question");
-        System.out.println("2. Delete existing question");
-        System.out.println("3. List all available questions");
-        System.out.println("4. Go back to main menu");
-        modeSelection = keyboard.nextLine();
+        // Quiz Creation Menu
+        MenuHandler.runQuizCreationMenu();
 
-        while ((!MenuHandler.isInt(modeSelection) || !MenuHandler.isInRange(modeSelection, 1,4))) {
-            System.out.println("\n* * * You made an invalid entry, please try again. * * *");
-            System.out.println("\nThis is The Manage Questions Menu");
-            System.out.println("Please make a choice from the selections below. Enter 1-4.");
-            System.out.println("1. Add a new question");
-            System.out.println("2. Delete existing question");
-            System.out.println("3. List all available questions");
-            System.out.println("4. Go back to main menu");
-            modeSelection = keyboard.nextLine();
-        }
+    }
 
-        // Redirects based on selection 1-4.
-        if ((Integer.parseInt(modeSelection))==1) {
-            addNewQuestion();
-        } else if ((Integer.parseInt(modeSelection))==2) {
-            deleteQuestion();
-        } else if ((Integer.parseInt(modeSelection))==3) {
-            listAllQuestions();
-        } else if ((Integer.parseInt(modeSelection))==4) {
-            MainProject.main(null);
-        }
-
-    } // end quizCreationMode()
 
     public static void addNewQuestion() {
         String questionID;
@@ -48,8 +20,13 @@ public class QuizCreationMode {
         System.out.println("Enter a question ID.");
         questionID = keyboard.nextLine();
 
-        while(questionIDCheck(questionID)) {
-            System.out.println("\nQuestion ID is already in use. Please try a new ID.");
+        // questionID validation. check if existing and check if blank
+        while( questionIDCheck(questionID) || questionID.isBlank() ) {
+            if (questionIDCheck(questionID)) {
+                System.out.println("\nQuestion ID is already in use. Please try a new ID.");
+            } else if (questionID.isBlank()) {
+                System.out.println("\nQuestion ID cannot be blank. Please try a new ID.");
+            }
             System.out.println("Enter a question ID.");
             questionID = keyboard.nextLine();
         }
@@ -60,8 +37,7 @@ public class QuizCreationMode {
         String possibleAnswers = keyboard.nextLine();
         ArrayList<String> answerChoices = new ArrayList<>();
 
-
-
+        // number of possible answers validation
         while ((!MenuHandler.isInt(possibleAnswers)) || (Integer.parseInt(possibleAnswers) <= 1)) {
             System.out.println("\n* * * You made an invalid entry, please try again. * * *\n");
             System.out.println("Number of possible answers must be a number, and be more than 1.");
@@ -69,6 +45,7 @@ public class QuizCreationMode {
             possibleAnswers = keyboard.nextLine();
         }
 
+        // loop through count of possible answers, add to arraylist
         for (int i = 0; i<(Integer.parseInt(possibleAnswers)); i++) {
             System.out.println("Choice #"+ (i+1) + ": Possible Answer: ");
             String choice = keyboard.nextLine();
@@ -78,11 +55,14 @@ public class QuizCreationMode {
         System.out.println("Enter which choice was the correct answer: ");
         String correctAnswer = keyboard.nextLine();
 
+        // correct answer validation. Checks if it's an in. checks to see if it's in range of given amt of possible answers.
         while ((!MenuHandler.isInt(correctAnswer)) || !MenuHandler.isInRange(correctAnswer, 1,(Integer.parseInt(possibleAnswers)))) {
             System.out.println("\n* * * You made an invalid entry, please try again. * * *\n");
             System.out.println("Enter which choice was the correct answer:");
             correctAnswer = keyboard.nextLine();
         }
+
+        // save question information in new object
         Question q = new Question();
         q.setQuestionID(questionID);
         q.setQuestionText(questionText);
@@ -121,14 +101,12 @@ public class QuizCreationMode {
 
 
     public static void listAllQuestions() {
-        Scanner keyboard = new Scanner(System.in);
-        int choiceNum = 1;
         System.out.println("\nThis is the List All Questions screen.");
-
         if (questionArrayList.size()>0) {
             System.out.println("Printing Questions...\n");
             System.out.println("-------------------------");
             for (Question question : questionArrayList) {
+                int choiceNum = 1;
                 System.out.printf("Question %s: %s\n",question.getQuestionID(), question.getQuestionText());
                 System.out.println("Possible Answers: ");
                 for (String choice : question.getAnswerChoices()) {

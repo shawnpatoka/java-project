@@ -27,9 +27,6 @@ public class SecretWord {
         }
 
         isSafe = SECRET_WORD.equals(userInput);
-
-
-
     }
 
 
