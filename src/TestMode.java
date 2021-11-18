@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class TestMode {
@@ -50,7 +51,7 @@ public class TestMode {
                         System.out.println("Enter your choice: ");
                         inputAnswer = keyboard.nextLine();
                     }
-                    if ((Integer.parseInt(inputAnswer)-1)==QuizCreationMode.questionArrayList.get(currentQuestion).getCorrectChoice()) {
+                    if ((Integer.parseInt(inputAnswer))==(QuizCreationMode.questionArrayList.get(currentQuestion).getCorrectChoice())) {
                         answersCorrect++;
                     } else {
                         answersIncorrect++;

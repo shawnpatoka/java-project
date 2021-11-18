@@ -39,7 +39,7 @@ public class MenuHandler {
         } else if ((Integer.parseInt(userInput))==2) {
             TestMode.testMode();
         } else if ((Integer.parseInt(userInput))==3) {
-            System.exit(0);
+            exitApplication();
         }
     }
 
@@ -61,17 +61,33 @@ public class MenuHandler {
         if ((Integer.parseInt(modeSelection))==1) {
             QuizCreationMode.addNewQuestion();
         } else if ((Integer.parseInt(modeSelection))==2) {
-            QuizCreationMode.deleteQuestion();
+            runEditQuestionMenu();
         } else if ((Integer.parseInt(modeSelection))==3) {
-            QuizCreationMode.listAllQuestions();
+            QuizCreationMode.deleteQuestion();
         } else if ((Integer.parseInt(modeSelection))==4) {
+            QuizCreationMode.listAllQuestions();
+        } else if ((Integer.parseInt(modeSelection))==5) {
             MainProject.main(null);
         }
     }
+    public static void runEditQuestionMenu() {
+        Scanner keyboard = new Scanner(System.in);
+        String userInput;
+        int count = 1;
+        System.out.println("\nEdit a question.");
+        System.out.println("Choose a question from below to edit.");
+        for (int i = 0 ; i < QuizCreationMode.questionArrayList.size();i++) {
+            System.out.println(count +". " + QuizCreationMode.questionArrayList.get(i).getQuestionID());
+            count++;
+        }
+        userInput = keyboard.nextLine();
+        QuizCreationMode.editQuestion(userInput);
 
+
+    }
 
     public static void mainMenuOptions(){
-        System.out.println("Welcome to the Quiz Master. Choose from the selection below. Enter a 1-3");
+        System.out.println("Welcome to the Quiz Master. Choose from the selection below.");
         System.out.println("1. Manage Questions");
         System.out.println("2. Test Mode");
         System.out.println("3. Exit");
@@ -80,10 +96,16 @@ public class MenuHandler {
 
     public static void quizCreationMenuOptions(){
         System.out.println("\nThis is The Manage Questions Menu");
-        System.out.println("Please make a choice from the selections below. Enter 1-4.");
+        System.out.println("Please make a choice from the selections below.");
         System.out.println("1. Add a new question");
-        System.out.println("2. Delete existing question");
-        System.out.println("3. List all available questions");
-        System.out.println("4. Go back to main menu");
+        System.out.println("2. Edit a question");
+        System.out.println("3. Delete existing question");
+        System.out.println("4. List all available questions");
+        System.out.println("5. Go back to main menu");
+    }
+
+    public static void exitApplication(){
+        ReadingSaving.writeFiles();
+        System.exit(0);
     }
 }

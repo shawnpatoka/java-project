@@ -1,5 +1,7 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class QuizCreationMode {
 
@@ -10,6 +12,10 @@ public class QuizCreationMode {
         // Quiz Creation Menu
         MenuHandler.runQuizCreationMenu();
 
+    }
+
+    public static void saveQuestionList() throws IOException {
+        ReadingSaving.writeFiles();
     }
 
 
@@ -72,6 +78,7 @@ public class QuizCreationMode {
         System.out.println("\n\nQuestion Created.");
         System.out.println("Returning to Manage Questions Menu.");
         quizCreationMode();
+
     }
 
 
@@ -107,25 +114,34 @@ public class QuizCreationMode {
             System.out.println("-------------------------");
             for (Question question : questionArrayList) {
                 int choiceNum = 1;
-                System.out.printf("Question %s: %s\n",question.getQuestionID(), question.getQuestionText());
+                System.out.printf("Question ID: %s \n%s\n",question.getQuestionID(), question.getQuestionText());
                 System.out.println("Possible Answers: ");
                 for (String choice : question.getAnswerChoices()) {
                     System.out.println(choiceNum + ": " + choice);
                     choiceNum++;
                 }
-                System.out.println("Correct answer is choice #" + (question.getCorrectChoice()+1));
+                System.out.println("Correct answer is choice #" + (question.getCorrectChoice()));
                 System.out.println("-------------------------");
             }
         } else {
             System.out.println("There are no questions saved.");
             System.out.println("Returning to Manage Questions menu.");
         }
+
         quizCreationMode();
     }
 
 
-    // I don't think this is the most efficient way to do this.
-    // This builds a new ArrayList every time this method is run.
+    public static void editQuestion(String q) {
+        int qID = Integer.parseInt(q)-1;
+        Scanner keyboard = new Scanner(System.in);
+        String userInput;
+        System.out.println("Edit Question: " + questionArrayList.get(qID).getQuestionID());
+        System.out.println(questionArrayList.get(qID).getQuestionText());
+        userInput = keyboard.nextLine();
+    }
+
+    // checks to see if questionID is in use
     public static boolean questionIDCheck(String qID) {
         boolean result;
         ArrayList<String> questionIDList = new ArrayList<>();

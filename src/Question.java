@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Question {
     private String questionID;
     private String questionText;
-    private int numberOfChoices;
     private ArrayList<String> answerChoices = new ArrayList<String>();
     private int correctChoice;
 
@@ -28,14 +27,6 @@ public class Question {
         this.questionText = questionText;
     }
 
-    public int getNumberOfChoices() {
-        return numberOfChoices;
-    }
-
-    public void setNumberOfChoices(int numberOfChoices) {
-        this.numberOfChoices = numberOfChoices;
-    }
-
     public ArrayList<String> getAnswerChoices() {
         return answerChoices;
     }
@@ -49,6 +40,6 @@ public class Question {
     }
 
     public void setCorrectChoice(String correctChoice) {
-        this.correctChoice = (Integer.parseInt(correctChoice)-1);
+        this.correctChoice = (Integer.parseInt(correctChoice));
     }
 }

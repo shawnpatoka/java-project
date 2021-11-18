@@ -23,7 +23,7 @@ public class SecretWord {
 
         if (userInput.equals("-1")) {
             System.out.println("Exiting Program");
-            System.exit(0);
+            MenuHandler.exitApplication();
         }
 
         isSafe = SECRET_WORD.equals(userInput);
